@@ -602,15 +602,11 @@ function toast(msg, icon='ti-check') {
 }
 
 // ── CLAUDE API (diretta) ───────────────────────────────────────────────────
-const ANTHROPIC_KEY = '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';
-
 async function callClaude(messages, system, maxTokens=400) {
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
+  const res = await fetch('https://quiet-bird-3c32.mattiabertoli123.workers.dev', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': ANTHROPIC_KEY,
-      'anthropic-version': '2023-06-01'
     },
     body: JSON.stringify({
       model: 'claude-sonnet-4-20250514',
