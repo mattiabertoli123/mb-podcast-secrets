@@ -601,11 +601,17 @@ function toast(msg, icon='ti-check') {
   setTimeout(() => el.classList.remove('show'), 2800);
 }
 
-// ── CLAUDE API (via backend) ───────────────────────────────────────────────
+// ── CLAUDE API (diretta) ───────────────────────────────────────────────────
+const ANTHROPIC_KEY = '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';
+
 async function callClaude(messages, system, maxTokens=400) {
-  const res = await fetch('/api/claude', {
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': ANTHROPIC_KEY,
+      'anthropic-version': '2023-06-01'
+    },
     body: JSON.stringify({
       model: 'claude-sonnet-4-20250514',
       max_tokens: maxTokens,
