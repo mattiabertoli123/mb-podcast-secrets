@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MB — Podcast Secrets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root {
+  --bg: #0c0c0e;
+  --bg2: #131316;
+  --bg3: #1a1a1f;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --text: #f0ede8;
+  --text2: #8a8790;
+  --text3: #5a5760;
+  --green: #1DB954;
+  --green2: #17a349;
+  --amber: #e8a020;
+  --red: #c0392b;
+  --font-head: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --radius: 10px;
+  --radius-lg: 14px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 14px; line-height: 1.5; }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+
+/* LAYOUT */
+.app { display: grid; grid-template-columns: 220px 1fr; height: 100vh; overflow: hidden; }
+
+/* SIDEBAR */
+.sidebar {
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow-y: auto;
+}
+.sidebar-logo {
+  padding: 1.5rem 1.25rem 1rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: .5rem;
+}
+.logo-mark {
+  display: flex; align-items: center; gap: 10px;
+}
+.logo-icon {
+  width: 32px; height: 32px;
+  background: var(--green);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+}
+.logo-icon i { font-size: 17px; color: #000; }
+.logo-name { font-family: var(--font-head); font-size: 15px; font-weight: 700; letter-spacing: .01em; }
+.logo-sub { font-size: 11px; color: var(--text3); margin-top: 1px; letter-spacing: .04em; text-transform: uppercase; }
+
+.sidebar-section { padding: .25rem 1rem; margin-top: .5rem; }
+.sidebar-label { font-size: 10px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: .08em; padding: .5rem .25rem .25rem; }
+.nav-item {
+  display: flex; align-items: center; gap: 9px;
+  padding: 7px 10px; border-radius: var(--radius);
+  cursor: pointer; color: var(--text2); font-size: 13px;
+  transition: background .15s, color .15s; margin-bottom: 1px;
+}
+.nav-item:hover { background: var(--bg3); color: var(--text); }
+.nav-item.active { background: var(--bg3); color: var(--text); font-weight: 500; }
+.nav-item i { font-size: 16px; flex-shrink: 0; }
+.nav-badge {
+  margin-left: auto; background: rgba(255,255,255,.08);
+  color: var(--text2); font-size: 11px; padding: 1px 7px;
+  border-radius: 20px;
+}
+.nav-item.active .nav-badge { background: var(--green); color: #000; }
+
+.sidebar-spacer { flex: 1; }
+.sidebar-footer { padding: .75rem 1.25rem; border-top: 1px solid var(--border); }
+
+/* MAIN */
+.main { display: flex; flex-direction: column; overflow: hidden; background: var(--bg); }
+
+.topbar {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 12px;
+  flex-shrink: 0;
+  background: var(--bg);
+}
+.search-wrap { flex: 1; position: relative; }
+.search-wrap i { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--text3); font-size: 16px; pointer-events: none; }
+.search-wrap input {
+  width: 100%; padding: 8px 12px 8px 36px;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius); color: var(--text); font-size: 13px;
+  font-family: var(--font-body); transition: border .15s;
+}
+.search-wrap input:focus { outline: none; border-color: var(--border2); }
+.search-wrap input::placeholder { color: var(--text3); }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: var(--radius);
+  font-size: 13px; cursor: pointer; font-family: var(--font-body);
+  border: 1px solid var(--border2); background: transparent;
+  color: var(--text); transition: background .15s, border-color .15s;
+  white-space: nowrap;
+}
+.btn:hover { background: var(--bg3); }
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+.btn-green { background: var(--green); border-color: var(--green); color: #000; font-weight: 500; }
+.btn-green:hover { background: var(--green2); border-color: var(--green2); }
+.btn-ghost-green { border-color: rgba(29,185,84,.3); color: var(--green); background: rgba(29,185,84,.06); font-size: 12px; padding: 5px 10px; }
+.btn-ghost-green:hover { background: rgba(29,185,84,.12); }
+.btn-sm { padding: 5px 10px; font-size: 12px; }
+.btn-icon { padding: 7px; border-radius: var(--radius); }
+
+/* CONTENT */
+.content { flex: 1; overflow-y: auto; padding: 1.5rem; }
+.view { display: none; }
+.view.active { display: block; }
+
+.page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+.page-title { font-family: var(--font-head); font-size: 20px; font-weight: 700; }
+.page-sub { font-size: 12px; color: var(--text2); margin-top: 2px; }
+
+/* CHIPS */
+.chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.chip {
+  padding: 5px 13px; border-radius: 20px; font-size: 12px;
+  cursor: pointer; border: 1px solid var(--border);
+  background: transparent; color: var(--text2); transition: all .15s;
+}
+.chip:hover { border-color: var(--border2); color: var(--text); }
+.chip.on { background: var(--bg3); border-color: var(--border2); color: var(--text); }
+
+/* GRID */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; }
+
+/* CARD */
+.card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 1rem;
+  cursor: pointer; transition: border-color .15s, transform .15s;
+  display: flex; flex-direction: column; gap: 9px;
+}
+.card:hover { border-color: var(--border2); transform: translateY(-1px); }
+.card-head { display: flex; align-items: flex-start; gap: 10px; }
+.picon {
+  width: 44px; height: 44px; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+}
+.card-title { font-family: var(--font-head); font-size: 13px; font-weight: 600; line-height: 1.3; }
+.card-author { font-size: 11px; color: var(--text2); margin-top: 2px; }
+.card-summary {
+  font-size: 12px; color: var(--text2); line-height: 1.55;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.tag {
+  font-size: 11px; padding: 2px 8px; border-radius: 20px;
+  background: rgba(255,255,255,.05); color: var(--text2);
+  border: 1px solid var(--border);
+}
+.card-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 9px; border-top: 1px solid var(--border); margin-top: auto;
+}
+.sdot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+.slabel { font-size: 11px; color: var(--text2); }
+.stars { display: flex; gap: 1px; }
+.star { font-size: 13px; color: var(--amber); }
+.star.e { color: var(--border2); }
+
+/* EMPTY STATE */
+.empty-state {
+  grid-column: 1/-1; text-align: center;
+  padding: 4rem 1rem; color: var(--text2);
+}
+.empty-state i { font-size: 40px; margin-bottom: 12px; display: block; color: var(--text3); }
+.empty-state h3 { font-family: var(--font-head); font-size: 16px; color: var(--text); margin-bottom: 6px; }
+.empty-state p { font-size: 13px; line-height: 1.6; max-width: 300px; margin: 0 auto 1.25rem; }
+
+/* MODAL */
+.overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.7);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100; backdrop-filter: blur(4px);
+}
+.modal {
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: var(--radius-lg); width: 520px;
+  max-height: 90vh; overflow-y: auto;
+  display: flex; flex-direction: column;
+  box-shadow: 0 24px 80px rgba(0,0,0,.6);
+}
+.modal-head {
+  padding: 1.1rem 1.25rem; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0; position: sticky; top: 0; background: var(--bg2); z-index: 1;
+}
+.modal-head h3 { font-family: var(--font-head); font-size: 16px; font-weight: 700; }
+.modal-body { padding: 1.25rem; display: flex; flex-direction: column; gap: 14px; }
+.modal-foot {
+  padding: .9rem 1.25rem; border-top: 1px solid var(--border);
+  display: flex; justify-content: flex-end; gap: 8px; flex-shrink: 0;
+  position: sticky; bottom: 0; background: var(--bg2);
+}
+
+/* FORM */
+.field label { display: block; font-size: 12px; color: var(--text2); margin-bottom: 4px; font-weight: 500; }
+.field input, .field select, .field textarea {
+  width: 100%; padding: 8px 10px;
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: var(--radius); color: var(--text); font-size: 13px;
+  font-family: var(--font-body); transition: border .15s;
+}
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--border2); }
+.field input::placeholder, .field textarea::placeholder { color: var(--text3); }
+.field textarea { resize: vertical; min-height: 85px; line-height: 1.55; }
+.field select { appearance: none; cursor: pointer; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.summary-area { position: relative; }
+.summary-area textarea { padding-right: 6px; }
+.ai-actions { display: flex; gap: 6px; margin-top: 6px; }
+
+.ai-status {
+  display: none; align-items: center; gap: 7px;
+  font-size: 12px; color: var(--green); padding: 6px 10px;
+  background: rgba(29,185,84,.08); border-radius: var(--radius);
+  border: 1px solid rgba(29,185,84,.2);
+}
+.ai-status i { animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.star-row { display: flex; gap: 6px; }
+.star-pick { font-size: 24px; cursor: pointer; color: var(--border2); transition: color .1s, transform .12s; }
+.star-pick:hover, .star-pick.on { color: var(--amber); }
+.star-pick:hover { transform: scale(1.15); }
+
+/* DETAIL */
+.detail-overlay {
+  position: fixed; inset: 0; z-index: 50;
+  background: var(--bg); display: none; flex-direction: column;
+  animation: slideIn .2s ease;
+}
+.detail-overlay.open { display: flex; }
+@keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: none; } }
+.detail-topbar {
+  padding: .9rem 1.5rem; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0; background: var(--bg);
+}
+.detail-body { padding: 1.5rem; overflow-y: auto; flex: 1; max-width: 720px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: 1.5rem; }
+.detail-hero { display: flex; align-items: flex-start; gap: 1.25rem; }
+.detail-picon { width: 64px; height: 64px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 30px; flex-shrink: 0; }
+.detail-title { font-family: var(--font-head); font-size: 22px; font-weight: 700; line-height: 1.2; margin-bottom: 4px; }
+.detail-sub { font-size: 13px; color: var(--text2); }
+.detail-meta { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.meta-box { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 12px; }
+.meta-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 3px; }
+.meta-value { font-size: 14px; font-weight: 500; }
+.section-title { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+.detail-text { font-size: 14px; line-height: 1.7; color: var(--text2); }
+.ai-insight {
+  background: rgba(29,185,84,.06); border-radius: var(--radius);
+  padding: 12px 14px; border: 1px solid rgba(29,185,84,.15);
+  border-left: 3px solid var(--green);
+}
+.ai-insight-label { font-size: 11px; color: var(--green); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; display: flex; align-items: center; gap: 5px; }
+
+/* RECS */
+.rec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.rec-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1rem; display: flex; flex-direction: column; gap: 10px; }
+.rec-why { background: rgba(29,185,84,.06); border-radius: var(--radius); padding: 9px 11px; border-left: 2px solid var(--green); font-size: 12px; color: var(--text2); line-height: 1.55; }
+.rec-why-label { font-size: 10px; color: var(--green); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+
+/* STATS */
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 1.5rem; }
+.stat-box { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; }
+.stat-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; }
+.stat-value { font-family: var(--font-head); font-size: 26px; font-weight: 700; }
+.stats-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.bar-track { flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.bar-fill { height: 100%; background: var(--green); border-radius: 2px; transition: width .5s ease; }
+
+/* TOAST */
+.toast {
+  position: fixed; bottom: 1.5rem; right: 1.5rem;
+  background: var(--bg3); border: 1px solid var(--border2);
+  border-radius: var(--radius); padding: 10px 16px;
+  font-size: 13px; z-index: 200; display: none;
+  animation: toastIn .2s ease;
+  box-shadow: 0 8px 30px rgba(0,0,0,.4);
+}
+.toast.show { display: flex; align-items: center; gap: 8px; }
+@keyframes toastIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* PULSE */
+.pulse { animation: pulse 1.4s infinite; }
+@keyframes pulse { 0%,100%{opacity:.35}50%{opacity:.9} }
+
+/* FADE IN */
+.fade-in { animation: fadeIn .3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark">
+        <div class="logo-icon"><i class="ti ti-headphones"></i></div>
+        <div>
+          <div class="logo-name">Podcast Secrets</div>
+          <div class="logo-sub">La tua rubrica</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="nav-item active" onclick="showView('library',this)">
+        <i class="ti ti-books"></i> Libreria
+        <span class="nav-badge" id="nb">0</span>
+      </div>
+      <div class="nav-item" onclick="showView('recs',this)">
+        <i class="ti ti-sparkles"></i> Suggerimenti AI
+      </div>
+      <div class="nav-item" onclick="showView('stats',this)">
+        <i class="ti ti-chart-bar"></i> Statistiche
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Categorie</div>
+      <div id="cat-nav"></div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Stato</div>
+      <div class="nav-item" onclick="filterStatus('In corso')"><i class="ti ti-player-play"></i> In corso</div>
+      <div class="nav-item" onclick="filterStatus('Completato')"><i class="ti ti-circle-check"></i> Completati</div>
+      <div class="nav-item" onclick="filterStatus('Da iniziare')"><i class="ti ti-bookmark"></i> Da iniziare</div>
+    </div>
+
+    <div class="sidebar-spacer"></div>
+
+    <div class="sidebar-footer">
+      <div class="nav-item" onclick="exportCSV()">
+        <i class="ti ti-download"></i> Esporta CSV
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="search-wrap">
+        <i class="ti ti-search"></i>
+        <input type="text" id="q" placeholder="Cerca per titolo, autore, tag…" oninput="renderCards()">
+      </div>
+      <button class="btn btn-green" onclick="openModal()">
+        <i class="ti ti-plus"></i> Aggiungi podcast
+      </button>
+    </div>
+
+    <!-- LIBRARY VIEW -->
+    <div class="content view active" id="view-library">
+      <div class="page-header">
+        <div>
+          <div class="page-title">La mia libreria</div>
+          <div class="page-sub" id="count-label">0 podcast salvati</div>
+        </div>
+      </div>
+      <div class="chips" id="filter-chips">
+        <div class="chip on" onclick="setChip('all',this)">Tutti</div>
+        <div class="chip" onclick="setChip('True Crime',this)">True Crime</div>
+        <div class="chip" onclick="setChip('Business',this)">Business</div>
+        <div class="chip" onclick="setChip('Narrativo',this)">Narrativo</div>
+        <div class="chip" onclick="setChip('Scandali',this)">Scandali</div>
+        <div class="chip" onclick="setChip('Finanza',this)">Finanza</div>
+        <div class="chip" onclick="setChip('Attualità',this)">Attualità</div>
+      </div>
+      <div class="grid" id="cards"></div>
+    </div>
+
+    <!-- RECS VIEW -->
+    <div class="content view" id="view-recs">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Suggerimenti AI</div>
+          <div class="page-sub">Basati sul tuo profilo di ascolto</div>
+        </div>
+        <button class="btn btn-sm" onclick="loadRecs(true)"><i class="ti ti-refresh"></i> Aggiorna</button>
+      </div>
+      <div id="recs-body"></div>
+    </div>
+
+    <!-- STATS VIEW -->
+    <div class="content view" id="view-stats">
+      <div class="page-header">
+        <div class="page-title">Statistiche</div>
+      </div>
+      <div id="stats-body"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="modal-wrap" style="display:none">
+  <div class="overlay" onclick="if(event.target===this)closeModal()">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-head">
+        <h3 id="modal-title">Nuovo podcast</h3>
+        <button class="btn btn-icon" onclick="closeModal()"><i class="ti ti-x"></i></button>
+      </div>
+      <div class="modal-body">
+
+        <!-- TITOLO + AUTO-COMPILA -->
+        <div class="field">
+          <label>Titolo *</label>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input id="f-title" placeholder="Es. Business Wars, Veleno…" style="flex:1">
+            <button class="btn btn-ghost-green" id="btn-autofill" onclick="autofillAll()">
+              <i class="ti ti-sparkles"></i> Auto-compila tutto
+            </button>
+          </div>
+        </div>
+
+        <div id="autofill-status" class="ai-status">
+          <i class="ti ti-loader-2"></i>
+          <span id="autofill-msg">Recupero informazioni in corso…</span>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>Autore / Produttore</label>
+            <input id="f-author" placeholder="Es. Wondery">
+          </div>
+          <div class="field">
+            <label>Piattaforma</label>
+            <select id="f-platform">
+              <option>Spotify</option>
+              <option>Apple Podcasts</option>
+              <option>YouTube</option>
+              <option>Audible</option>
+              <option>Altro</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>Categoria</label>
+            <select id="f-cat">
+              <option>True Crime</option>
+              <option>Business</option>
+              <option>Narrativo</option>
+              <option>Attualità</option>
+              <option>Scandali</option>
+              <option>Finanza</option>
+              <option>Tecnologia</option>
+              <option>Storia</option>
+              <option>Altro</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Stato</label>
+            <select id="f-status">
+              <option>Da iniziare</option>
+              <option>In corso</option>
+              <option>Completato</option>
+              <option>In pausa</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- RIASSUNTO + GENERA AI -->
+        <div class="field">
+          <label>Riassunto</label>
+          <div class="summary-area">
+            <textarea id="f-summary" placeholder="Scrivi manualmente oppure usa 'Genera AI' per farlo scrivere a Claude…" style="min-height:100px"></textarea>
+            <div class="ai-actions">
+              <button class="btn btn-ghost-green" id="btn-summary" onclick="genSummary()">
+                <i class="ti ti-sparkles"></i> Genera riassunto AI
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div id="summary-status" class="ai-status">
+          <i class="ti ti-loader-2"></i>
+          <span>Generazione riassunto in corso…</span>
+        </div>
+
+        <div class="field">
+          <label>Tag (separati da virgola)</label>
+          <input id="f-tags" placeholder="Es. CEO, scandalo finanziario, miniserie, Wall Street">
+        </div>
+
+        <div class="field">
+          <label>Episodi preferiti</label>
+          <input id="f-eps" placeholder="Es. Ep.3 — Il crollo, Ep.7 — La verità">
+        </div>
+
+        <div class="field">
+          <label>Note personali</label>
+          <textarea id="f-notes" placeholder="Solo tue: impressioni, citazioni, perché ti ha colpito…"></textarea>
+        </div>
+
+        <div class="field">
+          <label>Valutazione</label>
+          <div class="star-row" id="star-picker">
+            <span class="star-pick" onclick="setRating(1)">★</span>
+            <span class="star-pick" onclick="setRating(2)">★</span>
+            <span class="star-pick" onclick="setRating(3)">★</span>
+            <span class="star-pick" onclick="setRating(4)">★</span>
+            <span class="star-pick" onclick="setRating(5)">★</span>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-foot">
+        <button class="btn" onclick="closeModal()">Annulla</button>
+        <button class="btn btn-green" onclick="savePod()">
+          <i class="ti ti-check"></i> Salva nella libreria
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL OVERLAY -->
+<div class="detail-overlay" id="detail-overlay">
+  <div class="detail-topbar">
+    <button class="btn" onclick="closeDetail()">
+      <i class="ti ti-arrow-left"></i> Torna alla libreria
+    </button>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-sm" onclick="editCurrent()"><i class="ti ti-edit"></i> Modifica</button>
+      <button class="btn btn-sm" onclick="deleteCurrent()" style="color:var(--red);border-color:rgba(192,57,43,.3)">
+        <i class="ti ti-trash"></i>
+      </button>
+    </div>
+  </div>
+  <div class="detail-body" id="detail-body"></div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── CONSTANTS ──────────────────────────────────────────────────────────────
+const EMOJIS = {
+  'True Crime':'🔍','Business':'💼','Narrativo':'🎙️','Attualità':'📰',
+  'Scandali':'💥','Finanza':'💰','Tecnologia':'⚙️','Storia':'📜','Altro':'🎧'
+};
+const CAT_BG = {
+  'True Crime':'rgba(250,90,60,0.15)','Business':'rgba(29,185,84,0.12)',
+  'Narrativo':'rgba(120,80,220,0.15)','Attualità':'rgba(50,150,240,0.12)',
+  'Scandali':'rgba(220,60,120,0.14)','Finanza':'rgba(230,160,30,0.14)',
+  'Tecnologia':'rgba(50,200,150,0.12)','Storia':'rgba(160,140,100,0.14)','Altro':'rgba(100,100,120,0.12)'
+};
+const STATUS_COLOR = {
+  'In corso':'#1DB954','Completato':'#378ADD','Da iniziare':'#e8a020','In pausa':'#666'
+};
+
+// ── STATE ──────────────────────────────────────────────────────────────────
+let pods = JSON.parse(localStorage.getItem('mb_pods') || '[]');
+let rating = 0;
+let editId = null;
+let activeFilter = 'all';
+let currentId = null;
+let recsLoaded = false;
+
+// ── UTILS ──────────────────────────────────────────────────────────────────
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function save() { localStorage.setItem('mb_pods', JSON.stringify(pods)); }
+function catBg(c) { return CAT_BG[c] || CAT_BG['Altro']; }
+function catEmoji(c) { return EMOJIS[c] || '🎧'; }
+function starsHtml(r) { return Array.from({length:5},(_,i)=>`<span class="star${i<r?'':' e'}">★</span>`).join(''); }
+
+function toast(msg, icon='ti-check') {
+  const el = document.getElementById('toast');
+  el.innerHTML = `<i class="ti ${icon}" style="color:var(--green)"></i> ${msg}`;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+// ── CLAUDE API (via backend) ───────────────────────────────────────────────
+async function callClaude(messages, system, maxTokens=400) {
+  const res = await fetch('/api/claude', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: maxTokens,
+      system: system || 'Sei un esperto di podcast. Rispondi sempre in italiano. Sii conciso e preciso.',
+      messages
+    })
+  });
+  if (!res.ok) throw new Error('API error ' + res.status);
+  const data = await res.json();
+  return data.content?.map(c => c.text||'').join('').trim() || '';
+}
+
+async function callClaudeJSON(messages, system, maxTokens=700) {
+  const text = await callClaude(messages,
+    (system||'') + ' Rispondi SOLO con JSON valido. Nessun testo aggiuntivo, nessun backtick, nessun markdown.',
+    maxTokens
+  );
+  return JSON.parse(text.replace(/```json|```/g,'').trim());
+}
+
+// ── GENERA RIASSUNTO ──────────────────────────────────────────────────────
+async function genSummary() {
+  const title = document.getElementById('f-title').value.trim();
+  if (!title) { alert('Inserisci prima il titolo del podcast.'); return; }
+  const btn = document.getElementById('btn-summary');
+  const status = document.getElementById('summary-status');
+  btn.disabled = true;
+  status.style.display = 'flex';
+  try {
+    const author = document.getElementById('f-author').value.trim();
+    const cat = document.getElementById('f-cat').value;
+    const text = await callClaude([{
+      role: 'user',
+      content: `Scrivi un riassunto medio (6-8 righe) del podcast "${title}"${author?' di '+author:''} (categoria: ${cat}). Includi: di cosa tratta, contesto storico/culturale, stile narrativo, temi principali. Tono informativo e coinvolgente.`
+    }], null, 400);
+    document.getElementById('f-summary').value = text;
+    toast('Riassunto generato!');
+  } catch(e) {
+    alert('Errore nella generazione. Controlla la connessione o la chiave API in Vercel.');
+  } finally {
+    btn.disabled = false;
+    status.style.display = 'none';
+  }
+}
+
+// ── AUTO-COMPILA TUTTO ────────────────────────────────────────────────────
+async function autofillAll() {
+  const title = document.getElementById('f-title').value.trim();
+  if (!title) { alert('Inserisci prima il titolo del podcast.'); return; }
+  const btn = document.getElementById('btn-autofill');
+  const status = document.getElementById('autofill-status');
+  btn.disabled = true;
+  status.style.display = 'flex';
+  document.getElementById('autofill-msg').textContent = 'Recupero informazioni in corso…';
+  try {
+    const obj = await callClaudeJSON([{
+      role: 'user',
+      content: `Per il podcast "${title}", restituisci un oggetto JSON con:
+- author: stringa (produttore/autore principale)
+- category: una di [True Crime, Business, Narrativo, Attualità, Scandali, Finanza, Tecnologia, Storia, Altro]
+- summary: riassunto 6-8 righe (contesto, temi, stile narrativo, perché è interessante)
+- tags: array di 5-6 stringhe brevi e rilevanti`
+    }], null, 600);
+
+    if (obj.author) document.getElementById('f-author').value = obj.author;
+    if (obj.category) {
+      const sel = document.getElementById('f-cat');
+      for (let o of sel.options) if (o.value === obj.category) { sel.value = obj.category; break; }
+    }
+    if (obj.summary) document.getElementById('f-summary').value = obj.summary;
+    if (obj.tags && Array.isArray(obj.tags)) document.getElementById('f-tags').value = obj.tags.join(', ');
+
+    document.getElementById('autofill-msg').textContent = '✓ Compilato! Controlla e aggiungi le tue note.';
+    setTimeout(() => { status.style.display = 'none'; }, 2500);
+    toast('Scheda auto-compilata!', 'ti-sparkles');
+  } catch(e) {
+    status.style.display = 'none';
+    alert('Errore nella compilazione automatica. Controlla la connessione o la chiave API in Vercel.');
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+// ── MODAL ─────────────────────────────────────────────────────────────────
+function openModal(id=null) {
+  editId = id;
+  rating = 0;
+  if (id) {
+    const p = pods.find(x => x.id === id);
+    if (!p) return;
+    document.getElementById('f-title').value = p.title;
+    document.getElementById('f-author').value = p.author || '';
+    document.getElementById('f-platform').value = p.platform || 'Spotify';
+    document.getElementById('f-cat').value = p.category || 'Altro';
+    document.getElementById('f-status').value = p.status || 'Da iniziare';
+    document.getElementById('f-summary').value = p.summary || '';
+    document.getElementById('f-tags').value = (p.tags||[]).join(', ');
+    document.getElementById('f-eps').value = p.eps || '';
+    document.getElementById('f-notes').value = p.notes || '';
+    setRating(p.rating || 0);
+    document.getElementById('modal-title').textContent = 'Modifica podcast';
+  } else {
+    ['f-title','f-author','f-summary','f-tags','f-eps','f-notes'].forEach(i => document.getElementById(i).value = '');
+    document.getElementById('f-platform').value = 'Spotify';
+    document.getElementById('f-cat').value = 'True Crime';
+    document.getElementById('f-status').value = 'Da iniziare';
+    setRating(0);
+    document.getElementById('modal-title').textContent = 'Nuovo podcast';
+  }
+  document.getElementById('autofill-status').style.display = 'none';
+  document.getElementById('summary-status').style.display = 'none';
+  document.getElementById('btn-autofill').disabled = false;
+  document.getElementById('btn-summary').disabled = false;
+  document.getElementById('modal-wrap').style.display = 'block';
+}
+
+function closeModal() { document.getElementById('modal-wrap').style.display = 'none'; editId = null; }
+
+function setRating(n) {
+  rating = n;
+  document.querySelectorAll('.star-pick').forEach((s,i) => s.classList.toggle('on', i < n));
+}
+
+function savePod() {
+  const title = document.getElementById('f-title').value.trim();
+  if (!title) { alert('Inserisci il titolo'); return; }
+  const tags = document.getElementById('f-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  const p = {
+    id: editId || uid(), title,
+    author: document.getElementById('f-author').value.trim(),
+    platform: document.getElementById('f-platform').value,
+    category: document.getElementById('f-cat').value,
+    status: document.getElementById('f-status').value,
+    summary: document.getElementById('f-summary').value.trim(),
+    tags, eps: document.getElementById('f-eps').value.trim(),
+    notes: document.getElementById('f-notes').value.trim(),
+    rating,
+    added: editId ? (pods.find(x=>x.id===editId)?.added || Date.now()) : Date.now()
+  };
+  if (editId) { const i = pods.findIndex(x=>x.id===editId); if (i>-1) pods[i]=p; }
+  else pods.push(p);
+  save();
+  closeModal();
+  renderCards(); updateNav(); updateBadge();
+  recsLoaded = false;
+  toast(editId ? 'Podcast aggiornato!' : 'Podcast aggiunto alla libreria!');
+}
+
+// ── CARDS ─────────────────────────────────────────────────────────────────
+function renderCards() {
+  const q = document.getElementById('q').value.toLowerCase();
+  let list = pods.filter(p => {
+    const mq = !q || [p.title, p.author, ...(p.tags||[])].some(s => String(s).toLowerCase().includes(q));
+    const mf = activeFilter === 'all' || p.category === activeFilter;
+    return mq && mf;
+  });
+  const grid = document.getElementById('cards');
+  document.getElementById('count-label').textContent = pods.length + ' podcast salvati';
+  if (!list.length) {
+    grid.innerHTML = `<div class="empty-state">
+      <i class="ti ti-microphone-off"></i>
+      <h3>${pods.length ? 'Nessun risultato' : 'Libreria vuota'}</h3>
+      <p>${pods.length ? 'Prova a cambiare filtro o termine di ricerca.' : 'Aggiungi il tuo primo podcast per iniziare.'}</p>
+      ${!pods.length ? `<button class="btn btn-green" onclick="openModal()"><i class="ti ti-plus"></i> Aggiungi podcast</button>` : ''}
+    </div>`;
+    return;
+  }
+  grid.innerHTML = list.map(p => `
+    <div class="card fade-in" onclick="openDetail('${p.id}')">
+      <div class="card-head">
+        <div class="picon" style="background:${catBg(p.category)}">${catEmoji(p.category)}</div>
+        <div style="flex:1;min-width:0">
+          <div class="card-title">${esc(p.title)}</div>
+          <div class="card-author">${esc(p.author||'—')}</div>
+        </div>
+      </div>
+      ${p.summary ? `<div class="card-summary">${esc(p.summary)}</div>` : ''}
+      ${(p.tags||[]).length ? `<div class="tags">${p.tags.slice(0,3).map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>` : ''}
+      <div class="card-foot">
+        <span><span class="sdot" style="background:${STATUS_COLOR[p.status]||'#666'}"></span><span class="slabel">${p.status}</span></span>
+        <div class="stars">${starsHtml(p.rating)}</div>
+      </div>
+    </div>`).join('');
+}
+
+function setChip(f, el) {
+  activeFilter = f;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
+  el.classList.add('on');
+  renderCards();
+}
+
+function filterStatus(s) {
+  activeFilter = 'all';
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
+  document.querySelector('.chip').classList.add('on');
+  showView('library', document.querySelector('.nav-item'));
+  renderCards();
+  // filter inline
+  const list = pods.filter(p => p.status === s);
+  const grid = document.getElementById('cards');
+  document.getElementById('count-label').textContent = list.length + ' podcast';
+  grid.innerHTML = list.map(p => `
+    <div class="card fade-in" onclick="openDetail('${p.id}')">
+      <div class="card-head">
+        <div class="picon" style="background:${catBg(p.category)}">${catEmoji(p.category)}</div>
+        <div style="flex:1;min-width:0">
+          <div class="card-title">${esc(p.title)}</div>
+          <div class="card-author">${esc(p.author||'—')}</div>
+        </div>
+      </div>
+      ${p.summary ? `<div class="card-summary">${esc(p.summary)}</div>` : ''}
+      <div class="card-foot">
+        <span><span class="sdot" style="background:${STATUS_COLOR[p.status]||'#666'}"></span><span class="slabel">${p.status}</span></span>
+        <div class="stars">${starsHtml(p.rating)}</div>
+      </div>
+    </div>`).join('') || `<div class="empty-state" style="grid-column:1/-1"><i class="ti ti-filter-off"></i><h3>Nessun podcast con stato "${s}"</h3></div>`;
+}
+
+function updateBadge() { document.getElementById('nb').textContent = pods.length; }
+function updateNav() {
+  const cats = [...new Set(pods.map(p => p.category))];
+  document.getElementById('cat-nav').innerHTML = cats.map(c => `
+    <div class="nav-item" onclick="setChipSide('${esc(c)}')">
+      <span style="margin-right:4px">${catEmoji(c)}</span>${esc(c)}
+      <span class="nav-badge">${pods.filter(p=>p.category===c).length}</span>
+    </div>`).join('');
+}
+function setChipSide(f) {
+  activeFilter = f;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
+  showView('library', document.querySelector('.nav-item'));
+  renderCards();
+}
+
+// ── VIEWS ─────────────────────────────────────────────────────────────────
+function showView(v, el) {
+  document.querySelectorAll('.view').forEach(x => x.classList.remove('active'));
+  document.getElementById('view-' + v).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (el) el.classList.add('active');
+  if (v === 'recs' && !recsLoaded) loadRecs(false);
+  if (v === 'stats') renderStats();
+}
+
+// ── DETAIL ────────────────────────────────────────────────────────────────
+function openDetail(id) {
+  const p = pods.find(x => x.id === id);
+  if (!p) return;
+  currentId = id;
+  document.getElementById('detail-body').innerHTML = `
+    <div class="detail-hero fade-in">
+      <div class="detail-picon" style="background:${catBg(p.category)}">${catEmoji(p.category)}</div>
+      <div style="flex:1">
+        <div class="detail-title">${esc(p.title)}</div>
+        <div class="detail-sub">${esc(p.author||'—')} · ${esc(p.platform)}</div>
+        <div class="stars" style="margin-top:6px">${starsHtml(p.rating)}</div>
+      </div>
+    </div>
+    <div class="detail-meta fade-in">
+      <div class="meta-box"><div class="meta-label">Categoria</div><div class="meta-value">${esc(p.category)}</div></div>
+      <div class="meta-box"><div class="meta-label">Stato</div><div class="meta-value" style="color:${STATUS_COLOR[p.status]||'inherit'}">${esc(p.status)}</div></div>
+      <div class="meta-box"><div class="meta-label">Aggiunto il</div><div class="meta-value">${new Date(p.added).toLocaleDateString('it-IT')}</div></div>
+    </div>
+    ${p.summary ? `<div class="fade-in"><div class="section-title">Riassunto</div><div class="detail-text">${esc(p.summary)}</div></div>` : ''}
+    ${(p.tags||[]).length ? `<div class="fade-in"><div class="section-title">Tag</div><div class="tags">${p.tags.map(t=>`<span class="tag" style="font-size:12px;padding:3px 10px">${esc(t)}</span>`).join('')}</div></div>` : ''}
+    ${p.eps ? `<div class="fade-in"><div class="section-title">Episodi preferiti</div><div class="detail-text">${esc(p.eps)}</div></div>` : ''}
+    ${p.notes ? `<div class="fade-in"><div class="section-title">Note personali</div><div class="detail-text" style="font-style:italic">${esc(p.notes)}</div></div>` : ''}
+    <div class="ai-insight fade-in">
+      <div class="ai-insight-label"><i class="ti ti-sparkles" style="font-size:13px"></i> Analisi AI</div>
+      <div id="ai-analysis" class="detail-text pulse" style="font-size:13px;color:var(--text2)">Analisi in corso…</div>
+    </div>`;
+  document.getElementById('detail-overlay').classList.add('open');
+  genAnalysis(p);
+}
+
+async function genAnalysis(p) {
+  const el = document.getElementById('ai-analysis');
+  if (!el) return;
+  try {
+    const others = pods.filter(x=>x.id!==p.id&&x.rating>=4).slice(0,3).map(x=>x.title).join(', ');
+    const text = await callClaude([{
+      role: 'user',
+      content: `Analizza in 2-3 frasi il podcast "${p.title}"${p.author?' di '+p.author:''} (${p.category}, ${p.rating}/5★). ${p.summary?'Tema: '+p.summary.slice(0,120):''} ${others?'Altri podcast apprezzati: '+others:''}. Spiega cosa lo rende interessante per un ascoltatore appassionato di true crime, scandali finanziari e storie di business.`
+    }], null, 220);
+    el.classList.remove('pulse');
+    el.textContent = text;
+  } catch(e) {
+    el.classList.remove('pulse');
+    el.textContent = 'Scheda salvata correttamente. Connetti la chiave API su Vercel per l\'analisi AI.';
+  }
+}
+
+function closeDetail() { document.getElementById('detail-overlay').classList.remove('open'); currentId = null; }
+function editCurrent() { if (currentId) { closeDetail(); openModal(currentId); } }
+function deleteCurrent() {
+  if (!currentId) return;
+  if (!confirm('Eliminare questo podcast dalla libreria?')) return;
+  pods = pods.filter(p => p.id !== currentId);
+  save();
+  closeDetail(); renderCards(); updateNav(); updateBadge();
+  recsLoaded = false;
+  toast('Podcast eliminato.');
+}
+
+// ── RACCOMANDAZIONI ───────────────────────────────────────────────────────
+async function loadRecs(force=false) {
+  if (recsLoaded && !force) return;
+  const el = document.getElementById('recs-body');
+  const rated = pods.filter(p => p.rating >= 3);
+  if (rated.length < 2) {
+    el.innerHTML = `<div class="empty-state">
+      <i class="ti ti-sparkles"></i>
+      <h3>Libreria troppo piccola</h3>
+      <p>Aggiungi almeno 2 podcast con valutazione ≥ 3★ per ricevere raccomandazioni personalizzate.</p>
+    </div>`;
+    return;
+  }
+  el.innerHTML = `<div class="ai-status" style="display:flex"><i class="ti ti-loader-2" style="animation:spin 1s linear infinite"></i> Analisi del tuo profilo gusto in corso…</div>`;
+  try {
+    const profile = rated.map(p => `- ${p.title} (${p.category}, ${p.rating}★)${p.tags?.length?' ['+p.tags.slice(0,3).join(', ')+']':''}`).join('\n');
+    const recs = await callClaudeJSON([{
+      role: 'user',
+      content: `Libreria podcast dell'utente:\n${profile}\n\nL'utente ama: true crime, scandali aziendali, criminalità finanziaria, storie di CEO e founder, miniserie narrative, affari e crimine.\n\nSuggerisci 4 podcast reali e famosi (italiani o internazionali) non ancora presenti nella lista. Per ognuno:\n- title: titolo preciso\n- author: produttore/autore\n- category: una di [True Crime, Business, Narrativo, Attualità, Scandali, Finanza, Storia, Altro]\n- reason: 2 frasi in italiano su perché si adatta al profilo, con riferimento a podcast specifici della sua libreria\nRestituisci un array JSON.`
+    }], null, 800);
+    recsLoaded = true;
+    el.innerHTML = `
+      <p style="font-size:12px;color:var(--text2);margin-bottom:1rem">Basato su ${rated.length} podcast valutati nel tuo catalogo</p>
+      <div class="rec-grid">
+        ${Array.isArray(recs) ? recs.map(r => `
+          <div class="rec-card fade-in">
+            <div class="card-head">
+              <div class="picon" style="background:${catBg(r.category)};width:42px;height:42px;font-size:19px">${catEmoji(r.category)}</div>
+              <div style="flex:1;min-width:0">
+                <div class="card-title">${esc(r.title)}</div>
+                <div class="card-author">${esc(r.author||'')}</div>
+              </div>
+            </div>
+            <div class="rec-why"><div class="rec-why-label">Perché ti piacerà</div>${esc(r.reason)}</div>
+            <button class="btn btn-ghost-green" style="width:100%;justify-content:center" onclick="addFromRec('${esc(r.title)}','${esc(r.author||'')}','${esc(r.category)}')">
+              <i class="ti ti-plus"></i> Aggiungi alla libreria
+            </button>
+          </div>`).join('') : '<p style="color:var(--text2)">Nessun suggerimento disponibile.</p>'}
+      </div>`;
+  } catch(e) {
+    el.innerHTML = `<div class="empty-state">
+      <i class="ti ti-wifi-off"></i>
+      <h3>Connessione non riuscita</h3>
+      <p>Verifica che la chiave API sia configurata correttamente nelle variabili d'ambiente di Vercel.</p>
+    </div>`;
+  }
+}
+
+function addFromRec(title, author, cat) {
+  showView('library', document.querySelector('.nav-item'));
+  setTimeout(() => {
+    openModal();
+    document.getElementById('f-title').value = title;
+    document.getElementById('f-author').value = author;
+    const sel = document.getElementById('f-cat');
+    for (let o of sel.options) if (o.value === cat) { sel.value = cat; break; }
+    document.getElementById('f-status').value = 'Da iniziare';
+  }, 100);
+}
+
+// ── STATISTICHE ───────────────────────────────────────────────────────────
+function renderStats() {
+  const el = document.getElementById('stats-body');
+  if (!pods.length) {
+    el.innerHTML = `<div class="empty-state"><i class="ti ti-chart-bar"></i><h3>Nessun dato</h3><p>Aggiungi podcast per vedere le statistiche.</p></div>`;
+    return;
+  }
+  const byCat = {};
+  pods.forEach(p => { byCat[p.category] = (byCat[p.category]||0) + 1; });
+  const rated = pods.filter(p => p.rating > 0);
+  const avg = rated.length ? rated.reduce((a,p)=>a+p.rating,0)/rated.length : 0;
+  const completed = pods.filter(p => p.status==='Completato').length;
+  const tagCount = {};
+  pods.forEach(p => (p.tags||[]).forEach(t => { tagCount[t] = (tagCount[t]||0)+1; }));
+  const topTags = Object.entries(tagCount).sort((a,b)=>b[1]-a[1]).slice(0,8);
+
+  el.innerHTML = `
+    <div class="stat-grid fade-in">
+      <div class="stat-box"><div class="stat-label">Podcast totali</div><div class="stat-value">${pods.length}</div></div>
+      <div class="stat-box"><div class="stat-label">Completati</div><div class="stat-value">${completed}</div></div>
+      <div class="stat-box"><div class="stat-label">Rating medio</div><div class="stat-value">${avg.toFixed(1)}<span style="font-size:16px;color:var(--amber)">★</span></div></div>
+      <div class="stat-box"><div class="stat-label">Categorie</div><div class="stat-value">${Object.keys(byCat).length}</div></div>
+    </div>
+    <div class="stats-2col fade-in">
+      <div>
+        <div class="section-title" style="margin-bottom:12px">Distribuzione per categoria</div>
+        ${Object.entries(byCat).sort((a,b)=>b[1]-a[1]).map(([c,n])=>`
+          <div class="bar-row">
+            <span style="width:20px;text-align:center">${catEmoji(c)}</span>
+            <span style="flex:1;font-size:12px;color:var(--text2)">${c}</span>
+            <div class="bar-track"><div class="bar-fill" style="width:${Math.round(n/pods.length*100)}%"></div></div>
+            <span style="font-size:12px;color:var(--text3);min-width:16px;text-align:right">${n}</span>
+          </div>`).join('')}
+      </div>
+      <div>
+        <div class="section-title" style="margin-bottom:12px">Tag più usati</div>
+        <div class="tags" style="gap:6px">
+          ${topTags.map(([t,n])=>`<span class="tag" style="font-size:12px;padding:4px 10px">${esc(t)} <strong style="color:var(--text)">${n}</strong></span>`).join('') || `<span style="font-size:13px;color:var(--text2)">Nessun tag ancora</span>`}
+        </div>
+        <div style="margin-top:1.5rem">
+          <div class="section-title" style="margin-bottom:12px">Per stato</div>
+          ${['Completato','In corso','Da iniziare','In pausa'].map(s=>{
+            const n = pods.filter(p=>p.status===s).length;
+            return n ? `<div class="bar-row">
+              <span class="sdot" style="background:${STATUS_COLOR[s]||'#666'};width:8px;height:8px;flex-shrink:0"></span>
+              <span style="flex:1;font-size:12px;color:var(--text2)">${s}</span>
+              <div class="bar-track"><div class="bar-fill" style="width:${Math.round(n/pods.length*100)}%;background:${STATUS_COLOR[s]||'#666'}"></div></div>
+              <span style="font-size:12px;color:var(--text3);min-width:16px;text-align:right">${n}</span>
+            </div>` : '';
+          }).join('')}
+        </div>
+      </div>
+    </div>`;
+}
+
+// ── EXPORT CSV ────────────────────────────────────────────────────────────
+function exportCSV() {
+  if (!pods.length) { alert('Nessun podcast da esportare.'); return; }
+  const h = 'Titolo,Autore,Piattaforma,Categoria,Stato,Rating,Tag,Riassunto,Note\n';
+  const r = pods.map(p =>
+    [p.title,p.author,p.platform,p.category,p.status,p.rating,(p.tags||[]).join('; '),p.summary,p.notes]
+    .map(v => `"${String(v||'').replace(/"/g,'""')}"`)
+    .join(',')
+  ).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([h+r], {type:'text/csv'}));
+  a.download = 'podcast-secrets-libreria.csv';
+  a.click();
+  toast('CSV esportato!', 'ti-download');
+}
+
+// ── KEYBOARD SHORTCUTS ────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (document.getElementById('modal-wrap').style.display !== 'none') closeModal();
+    else if (document.getElementById('detail-overlay').classList.contains('open')) closeDetail();
+  }
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    e.preventDefault();
+    document.getElementById('q').focus();
+  }
+});
+
+// ── INIT ─────────────────────────────────────────────────────────────────
+renderCards();
+updateBadge();
+updateNav();
+</script>
+</body>
+</html>
